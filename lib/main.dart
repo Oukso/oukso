@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/features/welcome_screen/presentation/welcome_screen.dart';
+import 'package:oukso/src/features/welcome_screen_2/welcome_screen_2.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MaterialApp(
+    home: WelcomeScreen2(),
+  ));
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
-}
