@@ -1,6 +1,6 @@
-import 'package:oukso/src/data/chat.dart';
-import 'package:oukso/src/data/messege.dart';
-import 'package:oukso/src/data/user.dart';
+import 'package:oukso/src/features/chat/domain/chat.dart';
+import 'package:oukso/src/features/chat/domain/messege.dart';
+import 'package:oukso/src/features/chat/domain/user.dart';
 
 
 
