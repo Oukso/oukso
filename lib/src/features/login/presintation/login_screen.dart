@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/features/login/presintation/profil_info.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -6,15 +7,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0D3A7F),
       appBar: AppBar(
+          backgroundColor: const Color(0xFF0D3A7F),
           title: const Text(
-        "Gib deine Telefonnummer ein",
-      )),
+            "Gib deine Telefonnummer ein",
+            style: TextStyle(color: Colors.white),
+          )),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(32.0),
         child: Column(
           children: [
+            const TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 2, 45, 87),
+                        style: BorderStyle.solid),
+                  ),
+                  border: UnderlineInputBorder(),
+                  hintText: "Telefonnummer",
+                  labelText: 'Telefonnummer',
+                  labelStyle: TextStyle(
+                      color: Color(0xFF0D3A7F), fontWeight: FontWeight.w600)),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             const Row(
               children: [
                 Flexible(
@@ -31,7 +52,8 @@ class LoginScreen extends StatelessWidget {
                         hintText: "Telefonnummer",
                         labelText: 'Telefonnummer',
                         labelStyle: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600)),
+                            color: Color(0xFF0D3A7F),
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
                 SizedBox(
@@ -51,7 +73,8 @@ class LoginScreen extends StatelessWidget {
                         hintText: "Telefonnummer",
                         labelText: 'Telefonnummer',
                         labelStyle: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w600)),
+                            color: Color(0xFF0D3A7F),
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
               ],
@@ -61,7 +84,12 @@ class LoginScreen extends StatelessWidget {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilInfo()));
+                },
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.orange)),
                 child: const Text(
