@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oukso/src/features/login/presintation/login_screen.dart';
+import 'package:oukso/src/features/login/presentation/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

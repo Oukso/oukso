@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oukso/src/features/login/presintation/profil_info.dart';
+import 'package:oukso/src/features/login/presentation/profil_info.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -100,9 +100,12 @@ class LoginScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => const ProfilInfo()));
                     },
-                    style: const ButtonStyle(
-                        backgroundColor:
-                            MaterialStatePropertyAll(Colors.orange)),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(25),
+                                bottomLeft: Radius.circular(25)))),
                     child: const Text(
                       "Weiter",
                       style: TextStyle(

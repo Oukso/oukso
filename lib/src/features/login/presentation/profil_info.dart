@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/features/chat/presintation/home_page.dart';
 
 class ProfilInfo extends StatelessWidget {
   const ProfilInfo({super.key});
@@ -90,12 +91,20 @@ class ProfilInfo extends StatelessWidget {
                     const SizedBox(
                       height: 200,
                     ),
-                    const ElevatedButton(
-                      onPressed: null,
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.orange)),
-                      child: Text(
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(25),
+                                  bottomLeft: Radius.circular(25)))),
+                      child: const Text(
                         "Weiter",
                         style: TextStyle(
                             color: Color.fromARGB(255, 1, 59, 169),
