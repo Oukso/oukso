@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/data/mock_database.dart';
-import 'package:oukso/src/features/login/presintation/login_screen.dart';
+import 'package:oukso/src/features/splash_screen/presentation/splash_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -76,7 +76,7 @@ class App extends StatelessWidget {
         // fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
       themeMode: ThemeMode.light,
-      home: const LoginScreen(),
+      home: const SplashScreen(),
     );
   }
 }
