@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/features/chat/presintation/chat_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TabController(length: 3, vsync: this, initialIndex: 0);
+    _controller = TabController(length: 4, vsync: this, initialIndex: 0);
   }
 
   @override
@@ -26,18 +27,29 @@ class _HomePageState extends State<HomePage>
             "Oukso",
             style: TextStyle(color: Colors.white),
           ),
-          actions: const [
-            IconButton(
+          actions: [
+            const IconButton(
                 onPressed: null,
                 icon: Icon(
                   Icons.camera_alt_outlined,
                   color: Colors.white,
                 )),
-            IconButton(
+            const IconButton(
                 onPressed: null, icon: Icon(Icons.search, color: Colors.white)),
-            IconButton(
-                onPressed: null,
-                icon: Icon(Icons.more_vert, color: Colors.white)),
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                print(value);
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  const PopupMenuItem(child: Text("data")),
+                  const PopupMenuItem(child: Text("data")),
+                  const PopupMenuItem(child: Text("data")),
+                  const PopupMenuItem(child: Text("data")),
+                  const PopupMenuItem(child: Text("data"))
+                ];
+              },
+            )
           ],
           bottom: TabBar(
               automaticIndicatorColorAdjustment: true,
@@ -64,11 +76,8 @@ class _HomePageState extends State<HomePage>
                     end: Alignment.bottomRight,
                     transform: GradientRotation(0.5))),
           ),
-          const TabBarView(children: [
-            Text(
-              "Chat",
-              style: TextStyle(color: Colors.white),
-            ),
+          TabBarView(controller: _controller, children: const [
+            ChatPage(),
             Text("Status", style: TextStyle(color: Colors.white)),
             Text("Anruf", style: TextStyle(color: Colors.white)),
           ])
