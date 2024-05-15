@@ -1,7 +1,7 @@
 import 'package:oukso/src/data/database_repository.dart';
-import 'package:oukso/src/data/user.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/domain/message.dart';
+import 'package:oukso/src/features/chat/domain/user.dart';
 
 class MockDatabase implements DatabaseRepository {
   List<User> user = [

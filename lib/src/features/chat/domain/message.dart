@@ -1,4 +1,4 @@
-import 'package:oukso/src/data/user.dart';
+import 'package:oukso/src/features/chat/domain/user.dart';
 
 class Message {
   String type;
