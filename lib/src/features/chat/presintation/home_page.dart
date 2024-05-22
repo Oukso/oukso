@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/presintation/chat_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+  const HomePage({super.key, required this.databaseRepository});
+  final DatabaseRepository databaseRepository;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -15,7 +16,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller = TabController(length: 4, vsync: this, initialIndex: 0);
+    _controller = TabController(length: 3, vsync: this, initialIndex: 0);
   }
 
   @override
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage>
                 onPressed: null, icon: Icon(Icons.search, color: Colors.white)),
             PopupMenuButton<String>(
               onSelected: (value) {
-                print(value);
+                debugPrint(value);
               },
               itemBuilder: (BuildContext context) {
                 return [
@@ -76,10 +77,12 @@ class _HomePageState extends State<HomePage>
                     end: Alignment.bottomRight,
                     transform: GradientRotation(0.5))),
           ),
-          TabBarView(controller: _controller, children: const [
-            ChatPage(),
-            Text("Status", style: TextStyle(color: Colors.white)),
-            Text("Anruf", style: TextStyle(color: Colors.white)),
+          TabBarView(controller: _controller, children: [
+            ChatPage(
+              databaseRepository: widget.databaseRepository,
+            ),
+            const Text("Status", style: TextStyle(color: Colors.white)),
+            const Text("Anruf", style: TextStyle(color: Colors.white)),
           ])
         ],
       ),

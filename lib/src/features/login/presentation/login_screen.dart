@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/login/presentation/profil_info.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+  const LoginScreen({super.key, required this.databaseRepository});
+  final DatabaseRepository databaseRepository;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +99,9 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfilInfo()));
+                              builder: (context) => ProfilInfo(
+                                    databaseRepository: databaseRepository,
+                                  )));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oukso/src/features/customs/custom_card.dart';
+import 'package:oukso/src/data/database_repository.dart';
+import 'package:oukso/src/features/chat/customs/custom_card.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
-
+  const ChatPage({super.key, required this.databaseRepository});
+  final DatabaseRepository databaseRepository;
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -11,6 +12,9 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
+    final currentUser = widget.databaseRepository.getUser("1");
+    final chats = widget.databaseRepository.getUserChats(currentUser!);
+    debugPrint(chats.length.toString());
     return Scaffold(
       floatingActionButton: const FloatingActionButton(
         backgroundColor: Colors.orange,
@@ -29,16 +33,11 @@ class _ChatPageState extends State<ChatPage> {
                   end: Alignment.bottomRight,
                   transform: GradientRotation(0.5))),
         ),
-        ListView(
-          children: const [
-            CustemCard(),
-            CustemCard(),
-            CustemCard(),
-            CustemCard(),
-            CustemCard(),
-            CustemCard(),
-            CustemCard(),
-          ],
+        ListView.builder(
+          itemCount: chats.length,
+          itemBuilder: (context, index) => CustemCard(
+            chat: chats[index],
+          ),
         ),
       ]),
     );

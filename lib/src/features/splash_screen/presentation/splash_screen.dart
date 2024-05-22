@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/welcome_screen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+  const SplashScreen({super.key, required this.databaseRepository});
+  final DatabaseRepository databaseRepository;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -15,8 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 2), () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WelcomeScreen(
+                    databaseRepository: widget.databaseRepository,
+                  )));
     });
   }
 

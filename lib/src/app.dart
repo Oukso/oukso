@@ -14,7 +14,9 @@ class App extends StatelessWidget {
         fontFamily: "OpenSans",
         primaryColor: const Color(0xFF152B37),
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(
+        databaseRepository: databaseRepository,
+      ),
     );
   }
 }

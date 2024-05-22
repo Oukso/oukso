@@ -1,74 +1,83 @@
+import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/domain/message.dart';
 import 'package:oukso/src/features/chat/domain/user.dart';
 
 class MockDatabase implements DatabaseRepository {
-  List<User> user = [
+  // Simulierte Datenbank (fake)
+  List<User> users = [
     User(id: "1", userName: "Med", phoneNumber: "+4918765"),
     User(id: "2", userName: "Medou", phoneNumber: "+491876565"),
     User(id: "3", userName: "Medouk", phoneNumber: "+4918765987"),
   ];
 
-  Map<User, List<Chat>> userChats = {};
+  Map<String, List<Chat>> userChats = {
+    "1": [
+      Chat(
+        name: "Oukassou",
+        icon: "${const Icon(Icons.person)}",
+        isGroup: false,
+        time: "8:30",
+        currentMessage: "Hi, Mo",
+      ),
+      Chat(
+        name: "Med",
+        icon: "${const Icon(Icons.person)}",
+        isGroup: false,
+        time: "9:30",
+        currentMessage: "Hi, Mo",
+      ),
+      Chat(
+        name: "Aziz",
+        icon: "${const Icon(Icons.person)}",
+        isGroup: false,
+        time: "10:30",
+        currentMessage: "Hi, Mo",
+      ),
+      Chat(
+        name: "Patchata",
+        icon: "${const Icon(Icons.group)}",
+        isGroup: true,
+        time: "11:00",
+        currentMessage: "Hi, Mo",
+      ),
+      Chat(
+        name: "Batch#5",
+        icon: "${const Icon(Icons.group)}",
+        isGroup: true,
+        time: "11:30",
+        currentMessage: "Hi, Mo",
+      ),
+      Chat(
+        name: "Mum",
+        icon: "${const Icon(Icons.person)}",
+        isGroup: false,
+        time: "21:30",
+        currentMessage: "Hi, Mo",
+      )
+    ],
+  };
+
   Map<Chat, List<Message>> chatMessages = {};
 
-  void initializeUserChats() {
-    userChats[user[0]] = [
-      Chat(
-          id: 1,
-          participant: [user[0], user[1]],
-          name: 'Karim',
-          icon: '',
-          isGroup: false,
-          time: '',
-          currentMessage: '',
-          status: '',
-          select: false),
-      Chat(
-          id: 2,
-          participant: [user[0], user[2]],
-          name: 'Karim',
-          icon: '',
-          isGroup: false,
-          time: '',
-          currentMessage: '',
-          status: '',
-          select: false)
-    ];
-  }
-
-  void initializeUserMessege() {
-    chatMessages[userChats[user[0]]![0]] = [
-      Message(
-          id: "1",
-          sender: user[0],
-          text: "Hallo, wie war dein Tag?",
-          message: 'hi',
-          type: '',
-          time: '8:30'),
-      Message(
-          id: "2",
-          sender: user[0],
-          text: "Gut, und bei dir",
-          time: '8:00',
-          message: 'hi',
-          type: '')
-    ];
-  }
-
   @override
-  List<User> getUser() {
-    return user;
+  User? getUser(String id) {
+    for (User user in users) {
+      if (user.id == id) {
+        return user;
+      }
+    }
+    return null;
   }
 
   @override
   List<Chat> getUserChats(User user) {
     // Überprüfe, ob der Benutzer in der Liste der Benutzer vorhanden ist
-    if (!userChats.containsKey(user)) {
+    if (!userChats.containsKey(user.id)) {
       return [];
     }
-    return List<Chat>.from(userChats[user] ?? []);
+    return List<Chat>.from(userChats[user.id] ?? []);
   }
 
   @override

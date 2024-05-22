@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/presintation/home_page.dart';
 
 class ProfilInfo extends StatelessWidget {
-  const ProfilInfo({super.key});
-
+  const ProfilInfo({super.key, required this.databaseRepository});
+  final DatabaseRepository databaseRepository;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +97,9 @@ class ProfilInfo extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                                builder: (context) => HomePage(
+                                      databaseRepository: databaseRepository,
+                                    )));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
