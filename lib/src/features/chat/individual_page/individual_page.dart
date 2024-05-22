@@ -13,12 +13,40 @@ class _IndividualPageState extends State<IndividualPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          const IconButton(
+              onPressed: null,
+              icon: Icon(
+                Icons.video_call,
+                color: Colors.white,
+              )),
+          const IconButton(
+              onPressed: null, icon: Icon(Icons.call, color: Colors.white)),
+          PopupMenuButton<String>(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ),
+            onSelected: (value) {
+              debugPrint(value);
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem(child: Text("data")),
+                const PopupMenuItem(child: Text("data")),
+                const PopupMenuItem(child: Text("data")),
+                const PopupMenuItem(child: Text("data")),
+                const PopupMenuItem(child: Text("data"))
+              ];
+            },
+          )
+        ],
+        backgroundColor: const Color(0xFF152B37),
         leadingWidth: 70,
         leading: Row(
           children: [
-            const Icon(Icons.arrow_back),
             CircleAvatar(
-              backgroundColor: const Color(0xFF152B37),
+              backgroundColor: Colors.blueAccent,
               radius: 25,
               child: Icon(
                 widget.chat.isGroup ? Icons.group : Icons.person,

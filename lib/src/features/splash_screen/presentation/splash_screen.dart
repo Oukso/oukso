@@ -53,9 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
               top: 555,
               left: 100,
               child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                          colors: [Colors.blueAccent, Colors.orangeAccent])
-                      .createShader(bounds),
+                  shaderCallback: (bounds) => const LinearGradient(colors: [
+                        Color.fromARGB(255, 1, 173, 84),
+                        Color.fromARGB(255, 5, 24, 235),
+                        Colors.purple
+                      ]).createShader(bounds),
                   child: const Text(
                     "Welcome to Oukso",
                     style: TextStyle(

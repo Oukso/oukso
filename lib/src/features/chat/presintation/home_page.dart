@@ -14,7 +14,6 @@ class _HomePageState extends State<HomePage>
   late TabController _controller;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = TabController(length: 3, vsync: this, initialIndex: 0);
   }
@@ -23,6 +22,7 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: const Color(0xFF152B37),
           title: const Text(
             "Oukso",
@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage>
             const IconButton(
                 onPressed: null, icon: Icon(Icons.search, color: Colors.white)),
             PopupMenuButton<String>(
+              icon: const Icon(Icons.more_vert),
               onSelected: (value) {
                 debugPrint(value);
               },

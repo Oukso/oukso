@@ -53,7 +53,7 @@ class CustemCard extends StatelessWidget {
             padding: EdgeInsets.all(4.0),
             child: Divider(
               thickness: 0.5,
-              color: Colors.amber,
+              color: Colors.orange,
             ),
           )
         ],

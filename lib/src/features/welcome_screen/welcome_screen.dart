@@ -33,9 +33,11 @@ class WelcomeScreen extends StatelessWidget {
               top: 280,
               left: 100,
               child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                          colors: [Colors.blueAccent, Colors.orangeAccent])
-                      .createShader(bounds),
+                  shaderCallback: (bounds) => const LinearGradient(colors: [
+                        Color.fromARGB(255, 0, 255, 123),
+                        Color.fromARGB(255, 5, 24, 235),
+                        Colors.purple
+                      ]).createShader(bounds),
                   child: const Text(
                     "Welcome to Oukso",
                     style: TextStyle(
@@ -78,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
                           },
                           icon: const Icon(
                             Icons.radio_button_checked,
-                            color: Color.fromARGB(255, 250, 133, 0),
+                            color: Color.fromARGB(255, 0, 250, 137),
                           )),
                       const SizedBox(
                         width: 20,
