@@ -62,7 +62,8 @@ class MockDatabase implements DatabaseRepository {
   Map<Chat, List<Message>> chatMessages = {};
 
   @override
-  User? getUser(String id) {
+  Future<User?> getUser(String id) async {
+    await Future.delayed(const Duration(seconds: 2));
     for (User user in users) {
       if (user.id == id) {
         return user;
@@ -72,7 +73,8 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  List<Chat> getUserChats(User user) {
+  Future<List<Chat>> getUserChats(User user) async {
+    await Future.delayed(const Duration(seconds: 2));
     // Überprüfe, ob der Benutzer in der Liste der Benutzer vorhanden ist
     if (!userChats.containsKey(user.id)) {
       return [];
@@ -81,12 +83,14 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  List<Message> getChatMessages(Chat chat) {
+  Future<List<Message>> getChatMessages(Chat chat) async {
+    await Future.delayed(const Duration(seconds: 2));
     return List<Message>.from(chatMessages[chat] ?? []);
   }
 
   @override
-  void addMessage(Message message, Chat chat) {
+  Future<void> addMessage(Message message, Chat chat) async {
+    await Future.delayed(const Duration(seconds: 2));
     if (chatMessages.containsKey(chat)) {
       chatMessages[chat]?.add(message);
     }

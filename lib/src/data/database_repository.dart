@@ -3,8 +3,8 @@ import "package:oukso/src/features/chat/domain/message.dart";
 import 'package:oukso/src/features/chat/domain/user.dart';
 
 abstract class DatabaseRepository {
-  User? getUser(String id);
-  List<Chat> getUserChats(User user);
-  List<Message> getChatMessages(Chat chat);
-  void addMessage(Message message, Chat chat);
+  Future<User?> getUser(String id);
+  Future<List<Chat>> getUserChats(User user);
+  Future<List<Message>> getChatMessages(Chat chat);
+  Future<void> addMessage(Message message, Chat chat);
 }
