@@ -63,7 +63,7 @@ class MockDatabase implements DatabaseRepository {
 
   @override
   Future<User?> getUser(String id) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     for (User user in users) {
       if (user.id == id) {
         return user;
@@ -74,7 +74,7 @@ class MockDatabase implements DatabaseRepository {
 
   @override
   Future<List<Chat>> getUserChats(User user) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(milliseconds: 5));
     // Überprüfe, ob der Benutzer in der Liste der Benutzer vorhanden ist
     if (!userChats.containsKey(user.id)) {
       return [];

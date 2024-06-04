@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/login/presentation/profil_info.dart';
 
@@ -9,6 +10,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: const Color(0xFF1587B8),
           title: const Text(
             "Gib deine Telefonnummer ein",
@@ -29,7 +31,18 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.all(32.0),
             child: Column(
               children: [
-                const TextField(
+                IntlPhoneField(
+                  decoration: const InputDecoration(
+                      labelText: "Land",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      )),
+                  initialCountryCode: "DE",
+                  onChanged: (phone) {
+                    debugPrint(phone.completeNumber);
+                  },
+                )
+                /*const TextField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       enabledBorder: UnderlineInputBorder(
@@ -43,7 +56,8 @@ class LoginScreen extends StatelessWidget {
                       labelStyle: TextStyle(
                           color: Color(0xFF0D3A7F),
                           fontWeight: FontWeight.w600)),
-                ),
+                )
+                ,
                 const SizedBox(
                   height: 20,
                 ),
@@ -89,7 +103,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
+                ),*/
+                ,
                 const SizedBox(
                   height: 180,
                 ),
