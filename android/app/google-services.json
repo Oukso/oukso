@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "754321391897",
+    "project_id": "oukso-efaf3",
+    "storage_bucket": "oukso-efaf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754321391897:android:bd78be52271bdc93ebc588",
+        "android_client_info": {
+          "package_name": "com.example.oukso"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI3oR7QkID5DRanxetSJh_VFwyDEsIxtk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
