@@ -13,7 +13,7 @@ class AuthService {
     await _firebaseAuth
         .verifyPhoneNumber(
       timeout: const Duration(seconds: 30),
-      phoneNumber: phone,
+      phoneNumber: "+49$phone",
       verificationCompleted: (phoneAuthCredential) async {
         return;
       },
@@ -50,5 +50,16 @@ class AuthService {
     } catch (e) {
       return e.toString();
     }
+  }
+
+  // to logout the user
+  static Future logout() async {
+    await _firebaseAuth.signOut();
+  }
+
+  // check whether the user is logged in or not
+  static Future<bool> isLoggedIn() async {
+    var user = _firebaseAuth.currentUser;
+    return user != null;
   }
 }
