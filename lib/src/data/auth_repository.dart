@@ -4,7 +4,7 @@ class AuthService {
   static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   static String verifyId = "";
-  // to sent and otp to user
+  // to sent  otp to user
   static Future sentOtp({
     required String phone,
     required Function errorStep,
