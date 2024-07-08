@@ -1,218 +1,86 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:oukso/src/data/auth_repository.dart';
 import 'package:oukso/src/data/database_repository.dart';
-import 'package:oukso/src/features/login/presentation/profil_info.dart';
-import 'package:telephony/telephony.dart';
+import 'package:oukso/src/features/login/presentation/otp_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.databaseRepository});
   final DatabaseRepository databaseRepository;
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController controller;
+class _LoginScreenState extends State<LoginScreen> {
+  final phoneController = TextEditingController();
 
-  final Telephony telephony = Telephony.instance;
-
-  TextEditingController phoneContoller = TextEditingController();
-  TextEditingController otpContoller = TextEditingController();
-
-  final formKey = GlobalKey<FormState>();
-  final formKey1 = GlobalKey<FormState>();
-
-  void listenToIncomingSMS(BuildContext context) {
-    debugPrint("Listening to sms.");
-    telephony.listenIncomingSms(
-        onNewMessage: (SmsMessage message) {
-          // Handle message
-          debugPrint("sms received : ${message.body}");
-          // verify if we are reading the correct sms or not
-
-          if (message.body!.contains("phone-auth-15bdb")) {
-            String otpCode = message.body!.substring(0, 6);
-            setState(() {
-              otpContoller.text = otpCode;
-              // wait for 1 sec and then press handle submit
-              Future.delayed(const Duration(seconds: 1), () {
-                handleSubmit(context);
-              });
-            });
-          }
-        },
-        listenInBackground: false);
-  }
-
-// handle after otp is submitted
-  void handleSubmit(BuildContext context) {
-    if (formKey1.currentState!.validate()) {
-      AuthService.loginWithOtp(otp: otpContoller.text).then((value) {
-        if (value == "Success") {
-          Navigator.pop(context);
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProfilInfo(
-                        databaseRepository: widget.databaseRepository,
-                      )));
-        } else {
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              value,
-              style: const TextStyle(color: Colors.orange),
-            ),
-            backgroundColor: Colors.red,
-          ));
-        }
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(vsync: this);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
+  bool isloading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: const Color(0xFF1587B8),
-          title: const Text(
-            "Gib deine Telefonnummer ein",
-            style: TextStyle(color: Colors.orange),
-          )),
-      body: SafeArea(
-          child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xFF1587B8), Color(0xFF0D3A7F)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    transform: GradientRotation(0.5))),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Column(
-              children: [
-                Form(
-                  key: formKey,
-                  child: TextFormField(
-                    controller: phoneContoller,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                        prefixText: "+49 ",
-                        labelText: "Enter you phone number",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(32))),
-                    validator: (value) {
-                      if (value!.length != 11) {
-                        return "Invalid phone number";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 180,
-                ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        AuthService.sentOtp(
-                            phone: phoneContoller.text,
-                            errorStep: () => ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text(
-                                    "Error in sending OTP",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                )),
-                            nextStep: () {
-                              // start lisenting for otp
-                              listenToIncomingSMS(context);
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: const Text("OTP Verification"),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text("Enter 6 digit OTP"),
-                                            const SizedBox(
-                                              height: 12,
-                                            ),
-                                            Form(
-                                              key: formKey1,
-                                              child: TextFormField(
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                controller: otpContoller,
-                                                decoration: InputDecoration(
-                                                    labelText:
-                                                        "Enter you phone number",
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(32))),
-                                                validator: (value) {
-                                                  if (value!.length != 6) {
-                                                    return "Invalid OTP";
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () =>
-                                                  handleSubmit(context),
-                                              child: const Text("Submit"))
-                                        ],
-                                      ));
-                            });
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(25),
-                                bottomLeft: Radius.circular(25)))),
-                    child: const Text(
-                      "Weiter",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 1, 59, 169),
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Phone Authentication",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-          )
-        ],
-      )),
+            const SizedBox(height: 40),
+            TextField(
+              keyboardType: TextInputType.phone,
+              controller: phoneController,
+              decoration: InputDecoration(
+                  fillColor: Colors.grey.withOpacity(0.25),
+                  filled: true,
+                  hintText: "Enter Phone",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      borderSide: BorderSide.none)),
+            ),
+            const SizedBox(height: 20),
+            isloading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        isloading = true;
+                      });
+
+                      await FirebaseAuth.instance.verifyPhoneNumber(
+                        phoneNumber: phoneController.text,
+                        verificationCompleted: (phoneAuthCredential) {},
+                        verificationFailed: (error) {
+                          log(error.toString());
+                        },
+                        codeSent: (verificationId, forceResendingToken) {
+                          setState(() {
+                            isloading = false;
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OTPScreen(
+                                        verificationId: verificationId,
+                                        databaseRepository:
+                                            widget.databaseRepository,
+                                      )));
+                        },
+                        codeAutoRetrievalTimeout: (verificationId) {
+                          log("Auto Retireval timeout");
+                        },
+                      );
+                    },
+                    child: const Text(
+                      "Sign in",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    ))
+          ],
+        ),
+      ),
     );
   }
 }
