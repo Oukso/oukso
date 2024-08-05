@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
+import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/welcome_screen/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key, required this.databaseRepository});
+  const SplashScreen(
+      {super.key, required this.databaseRepository, required this.sourchat});
   final DatabaseRepository databaseRepository;
+  final Chat sourchat;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -21,6 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
           MaterialPageRoute(
               builder: (context) => WelcomeScreen(
                     databaseRepository: widget.databaseRepository,
+                    sourchat: widget.sourchat,
                   )));
     });
   }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
+import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/login/presentation/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key, required this.databaseRepository});
+  const WelcomeScreen(
+      {super.key, required this.databaseRepository, required this.sourchat});
   final DatabaseRepository databaseRepository;
+  final Chat sourchat;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,6 +79,7 @@ class WelcomeScreen extends StatelessWidget {
                                     builder: (context) => LoginScreen(
                                           databaseRepository:
                                               databaseRepository,
+                                          sourchat: sourchat,
                                         )));
                           },
                           icon: const Icon(

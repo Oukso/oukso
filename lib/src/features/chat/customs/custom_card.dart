@@ -3,8 +3,9 @@ import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/individual_page/individual_page.dart';
 
 class CustemCard extends StatelessWidget {
-  const CustemCard({super.key, required this.chat});
+  const CustemCard({super.key, required this.chat, required this.sourchat});
   final Chat chat;
+  final Chat sourchat;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -14,6 +15,7 @@ class CustemCard extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => IndividualPage(
                       chat: chat,
+                      sourchat: sourchat,
                     )));
       },
       child: Column(

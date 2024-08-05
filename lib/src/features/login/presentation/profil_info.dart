@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
+import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/presintation/home_page.dart';
 
 class ProfilInfo extends StatelessWidget {
-  const ProfilInfo({super.key, required this.databaseRepository});
+  const ProfilInfo(
+      {super.key, required this.databaseRepository, required this.sourchat});
   final DatabaseRepository databaseRepository;
+  final Chat sourchat;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,9 +64,9 @@ class ProfilInfo extends StatelessWidget {
                     const SizedBox(
                       height: 32,
                     ),
-                    const Row(
+                    Row(
                       children: [
-                        Flexible(
+                        const Flexible(
                           flex: 1,
                           child: TextField(
                             decoration: InputDecoration(
@@ -80,14 +83,16 @@ class ProfilInfo extends StatelessWidget {
                                     fontWeight: FontWeight.w600)),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 16,
                         ),
-                        Icon(
-                          Icons.emoji_emotions,
-                          size: 40,
-                          color: Colors.amber,
-                        )
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.emoji_emotions,
+                              color: Colors.orange,
+                              size: 40,
+                            ))
                       ],
                     ),
                     const SizedBox(
@@ -100,6 +105,7 @@ class ProfilInfo extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => HomePage(
                                       databaseRepository: databaseRepository,
+                                      sourchat: sourchat,
                                     )));
                       },
                       style: ElevatedButton.styleFrom(

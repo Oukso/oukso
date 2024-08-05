@@ -4,8 +4,10 @@ import 'package:oukso/src/features/chat/customs/custom_card.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key, required this.databaseRepository});
+  const ChatPage(
+      {super.key, required this.databaseRepository, required this.sourchat});
   final DatabaseRepository databaseRepository;
+  final Chat sourchat;
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
@@ -52,6 +54,7 @@ class _ChatPageState extends State<ChatPage> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) => CustemCard(
                   chat: snapshot.data![index],
+                  sourchat: widget.sourchat,
                 ),
               );
             } else if (snapshot.connectionState != ConnectionState.done) {

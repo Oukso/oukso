@@ -20,6 +20,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: false,
         time: "8:30",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '1',
       ),
       Chat(
         name: "Med",
@@ -27,6 +29,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: false,
         time: "9:30",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '2',
       ),
       Chat(
         name: "Aziz",
@@ -34,6 +38,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: false,
         time: "10:30",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '3',
       ),
       Chat(
         name: "Patchata",
@@ -41,6 +47,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: true,
         time: "11:00",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '4',
       ),
       Chat(
         name: "Batch#5",
@@ -48,6 +56,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: true,
         time: "11:30",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '5',
       ),
       Chat(
         name: "Mum",
@@ -55,6 +65,8 @@ class MockDatabase implements DatabaseRepository {
         isGroup: false,
         time: "21:30",
         currentMessage: "Hi, Mo",
+        select: false,
+        id: '6',
       )
     ],
   };

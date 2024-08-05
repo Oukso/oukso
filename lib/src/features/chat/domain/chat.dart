@@ -4,6 +4,8 @@ class Chat {
   bool isGroup;
   String time;
   String currentMessage;
+  bool select = false;
+  String id;
 
   Chat({
     required this.name,
@@ -11,6 +13,8 @@ class Chat {
     required this.isGroup,
     required this.time,
     required this.currentMessage,
+    required this.select,
+    required this.id,
   });
   Map<String, dynamic> toMap() {
     return {
@@ -28,6 +32,8 @@ class Chat {
         icon: map["icon"],
         isGroup: map["isGroup"],
         time: map["time"],
-        currentMessage: map["currentMessage"]);
+        currentMessage: map["currentMessage"],
+        select: map["select"],
+        id: "1");
   }
 }
