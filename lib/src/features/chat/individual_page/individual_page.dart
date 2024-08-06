@@ -11,6 +11,7 @@ class IndividualPage extends StatefulWidget {
   const IndividualPage({super.key, required this.chat, required this.sourchat});
   final Chat chat;
   final Chat sourchat;
+
   @override
   State<IndividualPage> createState() => _IndividualPageState();
 }
@@ -23,10 +24,10 @@ class _IndividualPageState extends State<IndividualPage> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   late IO.Socket socket;
+
   @override
   void initState() {
     super.initState();
-    // connect();
 
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
@@ -39,7 +40,6 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void connect() {
-    // Message message = Message(sourceId: widget.sourceChat.id.toString(),targetId: );
     socket = IO.io("http://192.168.0.106:5000", <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
@@ -55,7 +55,7 @@ class _IndividualPageState extends State<IndividualPage> {
             duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
       });
     });
-    debugPrint(socket.connected as String?);
+    debugPrint(socket.connected.toString());
   }
 
   void sendMessage(String message, int sourceId, int targetId) {
@@ -66,10 +66,12 @@ class _IndividualPageState extends State<IndividualPage> {
 
   void setMessage(String type, String message1) {
     Message message = Message(
-        type: type,
-        message: message1,
-        time: DateTime.now().toString().substring(10, 16));
-    debugPrint(messages as String?);
+      senderId: type == "source"
+          ? widget.sourchat.id.toString()
+          : widget.chat.id.toString(),
+      content: message1,
+      time: DateTime.now().toString().substring(10, 16),
+    );
 
     setState(() {
       messages.add(message);
@@ -165,12 +167,20 @@ class _IndividualPageState extends State<IndividualPage> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        // ignore: deprecated_member_use
         child: WillPopScope(
+          onWillPop: () {
+            if (show) {
+              setState(() {
+                show = false;
+              });
+            } else {
+              Navigator.pop(context);
+            }
+            return Future.value(false);
+          },
           child: Column(
             children: [
               Expanded(
-                // height: MediaQuery.of(context).size.height - 150,
                 child: ListView.builder(
                   shrinkWrap: true,
                   controller: _scrollController,
@@ -181,14 +191,15 @@ class _IndividualPageState extends State<IndividualPage> {
                         height: 70,
                       );
                     }
-                    if (messages[index].type == "source") {
+                    if (messages[index].senderId ==
+                        widget.sourchat.id.toString()) {
                       return OwnMessageCard(
-                        message: messages[index].message,
+                        message: messages[index].content,
                         time: messages[index].time,
                       );
                     } else {
                       return ReplayCard(
-                        message: messages[index].message,
+                        message: messages[index].content,
                         time: messages[index].time,
                       );
                     }
@@ -268,11 +279,7 @@ class _IndividualPageState extends State<IndividualPage> {
                                       IconButton(
                                         icon: const Icon(Icons.camera_alt),
                                         onPressed: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (builder) =>
-                                          //             CameraApp()));
+                                          // Implement camera functionality
                                         },
                                       ),
                                     ],
@@ -304,10 +311,8 @@ class _IndividualPageState extends State<IndividualPage> {
                                         duration:
                                             const Duration(milliseconds: 300),
                                         curve: Curves.easeOut);
-                                    sendMessage(
-                                        _controller.text,
-                                        widget.sourchat.id as int,
-                                        widget.chat.id as int);
+                                    sendMessage(_controller.text,
+                                        widget.sourchat.id, widget.chat.id);
                                     _controller.clear();
                                     setState(() {
                                       sendButton = false;
@@ -326,16 +331,6 @@ class _IndividualPageState extends State<IndividualPage> {
               ),
             ],
           ),
-          onWillPop: () {
-            if (show) {
-              setState(() {
-                show = false;
-              });
-            } else {
-              Navigator.pop(context);
-            }
-            return Future.value(false);
-          },
         ),
       ),
     );
@@ -401,7 +396,6 @@ class _IndividualPageState extends State<IndividualPage> {
             backgroundColor: color,
             child: Icon(
               icons,
-              // semanticLabel: "Help",
               size: 29,
               color: Colors.white,
             ),
@@ -413,7 +407,6 @@ class _IndividualPageState extends State<IndividualPage> {
             text,
             style: const TextStyle(
               fontSize: 12,
-              // fontWeight: FontWeight.w100,
             ),
           )
         ],
@@ -422,12 +415,38 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   Widget emojiSelect() {
-    return EmojiPicker(onEmojiSelected: (emoji, category) {
-      debugPrint('$emoji');
-      setState(() {
-        var emoji;
-        _controller.text = _controller.text + emoji?.emoji;
-      });
-    });
+    return EmojiPicker(
+      onEmojiSelected: (Category category, Emoji emoji) {
+        setState(() {
+          _controller.text += emoji.emoji;
+        });
+      },
+      config: const Config(
+        columns: 7,
+        emojiSizeMax: 32.0,
+        verticalSpacing: 0,
+        horizontalSpacing: 0,
+        gridPadding: EdgeInsets.zero,
+        initCategory: Category.RECENT,
+        bgColor: Color(0xFFF2F2F2),
+        indicatorColor: Colors.blue,
+        iconColor: Colors.grey,
+        iconColorSelected: Colors.blue,
+        progressIndicatorColor: Colors.blue,
+        backspaceColor: Colors.blue,
+        skinToneDialogBgColor: Colors.white,
+        skinToneIndicatorColor: Colors.grey,
+        enableSkinTones: true,
+        recentTabBehavior: RecentTabBehavior.RECENT,
+        recentsLimit: 28,
+        noRecentsStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.black26,
+        ),
+        noRecentsText: 'No Recents',
+        categoryIcons: CategoryIcons(),
+        buttonMode: ButtonMode.MATERIAL,
+      ),
+    );
   }
 }

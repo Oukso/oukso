@@ -1,22 +1,27 @@
 class Message {
-  String type;
-  String message;
+  String senderId;
+  String content;
   String time;
+
   Message({
-    required this.message,
-    required this.type,
+    required this.senderId,
+    required this.content,
     required this.time,
   });
-  Map<String, dynamic> toMap() {
-    return {
-      "type": type,
-      "message": message,
-      "time": time,
-    };
-  }
 
   factory Message.fromMap(Map<String, dynamic> map) {
     return Message(
-        message: map["message"], type: map["type"], time: map["time"]);
+      senderId: map['senderId'] as String,
+      content: map['content'] as String,
+      time: map['time'] as String,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'senderId': senderId,
+      'content': content,
+      'time': time,
+    };
   }
 }

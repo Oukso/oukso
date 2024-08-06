@@ -1,39 +1,40 @@
 class Chat {
+  String id;
   String name;
   String icon;
   bool isGroup;
   String time;
   String currentMessage;
-  bool select = false;
-  String id;
-
+  bool select;
   Chat({
+    required this.id,
     required this.name,
     required this.icon,
     required this.isGroup,
     required this.time,
     required this.currentMessage,
     required this.select,
-    required this.id,
   });
-  Map<String, dynamic> toMap() {
-    return {
-      "name": name,
-      "icon": icon,
-      "isGroup": isGroup,
-      "time": time,
-      "currentMessage": currentMessage,
-    };
-  }
-
   factory Chat.fromMap(Map<String, dynamic> map) {
     return Chat(
-        name: map["name"],
-        icon: map["icon"],
-        isGroup: map["isGroup"],
-        time: map["time"],
-        currentMessage: map["currentMessage"],
-        select: map["select"],
-        id: "1");
+      id: map['id'] as String,
+      name: map['name'] as String,
+      icon: map['icon'] as String,
+      isGroup: map['isGroup'] as bool,
+      time: map['time'] as String,
+      currentMessage: map['currentMessage'] as String,
+      select: map['select'] as bool,
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'icon': icon,
+      'isGroup': isGroup,
+      'time': time,
+      'currentMessage': currentMessage,
+      'select': select,
+    };
   }
 }
