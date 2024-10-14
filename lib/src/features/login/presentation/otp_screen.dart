@@ -2,19 +2,14 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/login/presentation/profil_info.dart';
 
 class OTPScreen extends StatefulWidget {
   const OTPScreen(
-      {super.key,
-      required this.verificationId,
-      required this.databaseRepository,
-      required this.sourchat});
+      {super.key, required this.verificationId, required this.sourchat});
   final String verificationId;
   final Chat sourchat;
-  final DatabaseRepository databaseRepository;
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -79,7 +74,6 @@ class _OTPScreenState extends State<OTPScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ProfilInfo(
-                                databaseRepository: widget.databaseRepository,
                                 sourchat: widget.sourchat,
                               ),
                             ));

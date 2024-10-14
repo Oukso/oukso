@@ -19,10 +19,10 @@ class AuthRepository {
   }
 
   /// Login with email and password
-  Future<void> loginWithEmailAndPassword(String email, String password) async {
+  /* Future<void> loginWithEmailAndPassword(String email, String password) async {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
-  }
+  }*/
 
   /// Logout
   Future<void> logout() async {

@@ -23,7 +23,6 @@ class App extends StatelessWidget {
     return StreamBuilder(
         stream: context.read<AuthRepository>().authStateChanges(),
         builder: (context, snapshot) {
-          final user = snapshot.data;
           return MaterialApp(
             theme: ThemeData(
               fontFamily: "OpenSans",

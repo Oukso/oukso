@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/customs/custom_card.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage(
-      {super.key, required this.databaseRepository, required this.sourchat});
-  final DatabaseRepository databaseRepository;
+  const ChatPage({super.key, required this.sourchat});
+
   final Chat sourchat;
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -14,16 +14,19 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   Future<List<Chat>> getChat() async {
-    final currentUser = await widget.databaseRepository.getUser("1");
-    final chats = await widget.databaseRepository.getUserChats(currentUser!);
+    final currentChatUser =
+        await context.read<DatabaseRepository>().getChatUser("1");
+    final chats = await context
+        .read<DatabaseRepository>()
+        .getChatUserChats(currentChatUser!);
 
     return chats;
   }
 
   @override
   Widget build(BuildContext context) {
-    /*final currentUser = widget.databaseRepository.getUser("1");
-    final chats = widget.databaseRepository.getUserChats(currentUser!);
+    /*final currentChatUser = widget.databaseRepository.getChatUser("1");
+    final chats = widget.databaseRepository.getChatUserChats(currentChatUser!);
     debugPrint(chats.length.toString());*/
     return Scaffold(
       floatingActionButton: const FloatingActionButton(

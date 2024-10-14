@@ -15,7 +15,7 @@ dependencies:
   firebase_core: ^3.1.1
   firebase_auth: ^5.1.1
   cloud_firestore: ^5.0.2
-  provider: ^6.1.2
+  provider: ^1.16.0
   socket_io_client: ^1.0.2
   emoji_picker_flutter: ^1.0.0
   http: ^1.2.2

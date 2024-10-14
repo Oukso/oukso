@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/presintation/home_page.dart';
 
 class ProfilInfo extends StatelessWidget {
-  const ProfilInfo(
-      {super.key, required this.databaseRepository, required this.sourchat});
-  final DatabaseRepository databaseRepository;
+  const ProfilInfo({super.key, required this.sourchat});
+
   final Chat sourchat;
   @override
   Widget build(BuildContext context) {
@@ -104,7 +102,6 @@ class ProfilInfo extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomePage(
-                                      databaseRepository: databaseRepository,
                                       sourchat: sourchat,
                                     )));
                       },

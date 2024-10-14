@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/presintation/chat_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage(
-      {super.key, required this.databaseRepository, required this.sourchat});
-  final DatabaseRepository databaseRepository;
+  const HomePage({super.key, required this.sourchat});
+
   final Chat sourchat;
   @override
   State<HomePage> createState() => _HomePageState();
@@ -83,7 +81,6 @@ class _HomePageState extends State<HomePage>
           ),
           TabBarView(controller: _controller, children: [
             ChatPage(
-              databaseRepository: widget.databaseRepository,
               sourchat: widget.sourchat,
             ),
             const Text("Status", style: TextStyle(color: Colors.white)),

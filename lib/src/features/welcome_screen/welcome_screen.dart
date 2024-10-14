@@ -77,8 +77,6 @@ class WelcomeScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LoginScreen(
-                                          databaseRepository:
-                                              databaseRepository,
                                           sourchat: sourchat,
                                         )));
                           },

@@ -2,17 +2,17 @@
 import 'package:oukso/src/data/database_repository.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/domain/message.dart';
-import 'package:oukso/src/features/chat/domain/user.dart';
+import 'package:oukso/src/features/chat/domain/ChatUser.dart';
 
 class MockDatabase implements DatabaseRepository {
   // Simulierte Datenbank (fake)
-  List<User> users = [
-    User(id: "1", userName: "Med", phoneNumber: "+4918765"),
-    User(id: "2", userName: "Medou", phoneNumber: "+491876565"),
-    User(id: "3", userName: "Medouk", phoneNumber: "+4918765987"),
+  List<ChatUser> ChatUsers = [
+    ChatUser(id: "1", ChatUserName: "Med", phoneNumber: "+4918765"),
+    ChatUser(id: "2", ChatUserName: "Medou", phoneNumber: "+491876565"),
+    ChatUser(id: "3", ChatUserName: "Medouk", phoneNumber: "+4918765987"),
   ];
 
-  Map<String, List<Chat>> userChats = {
+  Map<String, List<Chat>> ChatUserChats = {
     "1": [
       Chat(
         name: "Oukassou",
@@ -74,24 +74,24 @@ class MockDatabase implements DatabaseRepository {
   Map<Chat, List<Message>> chatMessages = {};
 
   @override
-  Future<User?> getUser(String id) async {
+  Future<ChatUser?> getChatUser(String id) async {
     await Future.delayed(const Duration(seconds: 1));
-    for (User user in users) {
-      if (user.id == id) {
-        return user;
+    for (ChatUser ChatUser in ChatUsers) {
+      if (ChatUser.id == id) {
+        return ChatUser;
       }
     }
     return null;
   }
 
   @override
-  Future<List<Chat>> getUserChats(User user) async {
+  Future<List<Chat>> getChatUserChats(ChatUser ChatUser) async {
     await Future.delayed(const Duration(milliseconds: 5));
     // Überprüfe, ob der Benutzer in der Liste der Benutzer vorhanden ist
-    if (!userChats.containsKey(user.id)) {
+    if (!ChatUserChats.containsKey(ChatUser.id)) {
       return [];
     }
-    return List<Chat>.from(userChats[user.id] ?? []);
+    return List<Chat>.from(ChatUserChats[ChatUser.id] ?? []);
   }
 
   @override

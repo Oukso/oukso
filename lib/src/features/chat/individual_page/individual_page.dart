@@ -1,10 +1,8 @@
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:oukso/src/features/chat/customs/own_message_card.dart';
 import 'package:oukso/src/features/chat/customs/replay_card.dart';
 import 'package:oukso/src/features/chat/domain/chat.dart';
 import 'package:oukso/src/features/chat/domain/message.dart';
-// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
@@ -167,6 +165,7 @@ class _IndividualPageState extends State<IndividualPage> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
+        // ignore: deprecated_member_use
         child: WillPopScope(
           onWillPop: () {
             if (show) {
@@ -311,8 +310,10 @@ class _IndividualPageState extends State<IndividualPage> {
                                         duration:
                                             const Duration(milliseconds: 300),
                                         curve: Curves.easeOut);
-                                    sendMessage(_controller.text,
-                                        widget.sourchat.id, widget.chat.id);
+                                    sendMessage(
+                                        _controller.text,
+                                        widget.sourchat.id as int,
+                                        widget.chat.id as int);
                                     _controller.clear();
                                     setState(() {
                                       sendButton = false;
@@ -324,7 +325,6 @@ class _IndividualPageState extends State<IndividualPage> {
                           ),
                         ],
                       ),
-                      show ? emojiSelect() : Container(),
                     ],
                   ),
                 ),
@@ -410,42 +410,6 @@ class _IndividualPageState extends State<IndividualPage> {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  Widget emojiSelect() {
-    return EmojiPicker(
-      onEmojiSelected: (Category category, Emoji emoji) {
-        setState(() {
-          _controller.text += emoji.emoji;
-        });
-      },
-      config: const Config(
-        columns: 7,
-        emojiSizeMax: 32.0,
-        verticalSpacing: 0,
-        horizontalSpacing: 0,
-        gridPadding: EdgeInsets.zero,
-        initCategory: Category.RECENT,
-        bgColor: Color(0xFFF2F2F2),
-        indicatorColor: Colors.blue,
-        iconColor: Colors.grey,
-        iconColorSelected: Colors.blue,
-        progressIndicatorColor: Colors.blue,
-        backspaceColor: Colors.blue,
-        skinToneDialogBgColor: Colors.white,
-        skinToneIndicatorColor: Colors.grey,
-        enableSkinTones: true,
-        recentTabBehavior: RecentTabBehavior.RECENT,
-        recentsLimit: 28,
-        noRecentsStyle: TextStyle(
-          fontSize: 20,
-          color: Colors.black26,
-        ),
-        noRecentsText: 'No Recents',
-        categoryIcons: CategoryIcons(),
-        buttonMode: ButtonMode.MATERIAL,
       ),
     );
   }
